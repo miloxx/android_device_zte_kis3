@@ -13,3 +13,17 @@ unix_socket_connect(qti_init_shell, qmuxd, qmuxd)
 
 # gsm.version.baseband property - init.zte.baseband.sh
 allow qti_init_shell radio_prop:property_service set;
+
+# for insmod of iris ko, this is needed.
+# dac_read/override is needed for scripts to do chown/mkdir which is
+# needed by most of the services
+# fowner and fsetid are needed for chmod display nodes.
+allow qti_init_shell self:capability {
+    sys_module
+    net_admin
+    chown
+    fowner
+    fsetid
+    dac_override
+    dac_read_search
+};

@@ -103,11 +103,6 @@ service thermal-engine /system/bin/thermal-engine
     socket thermal-recv-passive-client stream 0666 system system
     group root
 
-service qseecomd /system/bin/qseecomd
-    class core
-    user root
-    group root
-
 # start camera server as daemon
 service qcamerasvr /system/bin/mm-qcamera-daemon
     class late_start

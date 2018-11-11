@@ -98,7 +98,6 @@ vendor/lib/libI420colorconvert.so
 vendor/lib/libmm-color-convertor.so
 
 # DRM
-bin/qseecomd
 vendor/lib/libdrmdiag.so
 vendor/lib/libdrmfs.so
 vendor/lib/libdrmtime.so
