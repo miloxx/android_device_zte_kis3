@@ -3,5 +3,6 @@ dontauditxperm untrusted_app self:udp_socket ioctl SIOCGIFHWADDR;
 
 # For apps on sdcard
 allow untrusted_app asec_public_file:file { open read };
+allow untrusted_app asec_public_file:file getattr;
 allow untrusted_app asec_public_file:dir { getattr search };
 allow untrusted_app sysfs:file { getattr open read };
