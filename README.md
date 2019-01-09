@@ -9,6 +9,7 @@ Packages installation:
     dpkg --add-architecture i386 ; apt-get update
     apt-get build-dep gcc binutils llvm-defaults
     apt-get install gcc-arm-none-eabi cmake python-dev swig ant bc proguard maven-debian-helper libemma-java libasm4-java libguava-java libnb-platform18-java libnb-org-openide-util-java libandroidsdk-ddmlib-java libmaven-source-plugin-java libfreemarker-java libmaven-javadoc-plugin-java ca-cacert curl gawk libgmp3-dev libmpfr-dev libmpc-dev git-core gperf libncurses-dev squashfs-tools pngcrush zip zlib1g-dev lzma libc6-dev-i386 g++-multilib lib32z1-dev lib32readline-dev lib32ncurses5-dev zlib1g-dev:i386 xsltproc python-mako schedtool gradle dirmngr libandroidsdk-sdklib-java eclipse-jdt libgradle-android-plugin-java android-sdk-build-tools android-sdk-platform-23 aapt lzop rsync python-dev
+    apt-get install imagemagick
 
 And the package installation from the contrib repository:
 
@@ -37,6 +38,10 @@ Compile:
 
     . build/envsetup.sh
     brunch kis3
+
+It might be necessary to increase the xmx for java compilation of Jack (see https://stackoverflow.com/questions/35579646/android-source-code-compile-error-try-increasing-heap-size-with-java-option) :
+
+    export JACK_SERVER_VM_ARGUMENTS="-Dfile.encoding=UTF-8 -XX:+TieredCompilation -Xmx4g"
 
 How to update:
 --------------
