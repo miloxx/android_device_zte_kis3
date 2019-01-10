@@ -1,0 +1,247 @@
+diff --git a/vendor/cm/prebuilt/common/Android.mk b/vendor/cm/prebuilt/common/Android.mk
+index f15b178c..1f73bbe4 100644
+--- a/vendor/cm/prebuilt/common/Android.mk
++++ b/vendor/cm/prebuilt/common/Android.mk
+@@ -8,3 +8,31 @@ LOCAL_MODULE_TAGS := optional
+ LOCAL_MODULE_CLASS := EXECUTABLES
+ LOCAL_MODULE_PATH := $(TARGET_OUT_OPTIONAL_EXECUTABLES)
+ include $(BUILD_PREBUILT)
++
++include $(CLEAR_VARS)
++LOCAL_MODULE := F-Droid
++LOCAL_MODULE_CLASS := APPS
++LOCAL_CERTIFICATE := PRESIGNED
++LOCAL_SRC_FILES := apps/FDroid.apk
++include $(BUILD_PREBUILT)
++
++include $(CLEAR_VARS)
++LOCAL_MODULE := Firefox-Lite
++LOCAL_MODULE_CLASS := APPS
++LOCAL_CERTIFICATE := platform
++LOCAL_SRC_FILES := apps/Firefox-Lite.apk
++include $(BUILD_PREBUILT)
++
++include $(CLEAR_VARS)
++LOCAL_MODULE := steam
++LOCAL_MODULE_CLASS := APPS
++LOCAL_CERTIFICATE := platform
++LOCAL_SRC_FILES := apps/steam.apk
++include $(BUILD_PREBUILT)
++
++include $(CLEAR_VARS)
++LOCAL_MODULE := cSploit
++LOCAL_MODULE_CLASS := APPS
++LOCAL_CERTIFICATE := platform
++LOCAL_SRC_FILES := apps/cSploit.apk
++include $(BUILD_PREBUILT)
+diff --git a/vendor/cm/config/common.mk b/vendor/cm/config/common.mk
+index 55d1dac8..092d5b9d 100644
+--- a/vendor/cm/config/common.mk
++++ b/vendor/cm/config/common.mk
+@@ -91,15 +91,18 @@ include vendor/cm/config/twrp.mk
+ endif
+ 
+ # Bootanimation
+-PRODUCT_PACKAGES += \
+-    bootanimation.zip
++#PRODUCT_PACKAGES += \
++#    bootanimation.zip
++# OK =
++#PRODUCT_COPY_FILES += \
++#    vendor/cm/bootanimation/bootanimation.zip:system/media/bootanimation.zip
+ 
+ # Required CM packages
+ PRODUCT_PACKAGES += \
+-    BluetoothExt \
+     CMAudioService \
+-    CMParts \
+     Development \
++    BluetoothExt \
++    CMParts \
+     Profiles \
+     WeatherManagerService
+ 
+@@ -125,7 +128,10 @@ PRODUCT_PACKAGES += \
+     Jelly \
+     LockClock \
+     Trebuchet \
+-    Updater \
++    F-Droid \
++    Firefox-Lite \
++    steam \
++    cSploit \
+     WallpaperPicker \
+     WeatherProvider
+ 
+@@ -136,11 +142,12 @@ PRODUCT_PACKAGES += \
+ # Extra tools in CM
+ PRODUCT_PACKAGES += \
+     7z \
++    awk \
+     bash \
+     bzip2 \
+     curl \
+     fsck.ntfs \
+-    gdbserver \
++#    gdbserver \
+     htop \
+     lib7z \
+     libsepol \
+@@ -148,6 +155,7 @@ PRODUCT_PACKAGES += \
+     mke2fs \
+     mkfs.ntfs \
+     mount.ntfs \
++    nano \
+     oprofiled \
+     pigz \
+     powertop \project external/wpa_supplicant_8/
+diff --git a/wpa_supplicant/wpa_supplicant_template.conf b/wpa_supplicant/wpa_supplicant_template.conf
+index f3f2a64..494d10a 100644
+--- a/external/wpa_supplicant_8/wpa_supplicant/wpa_supplicant_template.conf
++++ b/external/wpa_supplicant_8/wpa_supplicant/wpa_supplicant_template.conf
+@@ -4,3 +4,4 @@ eapol_version=1
+ ap_scan=1
+ fast_reauth=1
+ pmf=1
++preassoc_mac_addr=1
+diff --git a/packages/SettingsProvider/res/values/defaults.xml b/packages/SettingsProvider/res/values/defaults.xml
+index 9b50dc0..b94c7d8 100644
+--- a/frameworks/base/packages/SettingsProvider/res/values/defaults.xml
++++ b/frameworks/base/packages/SettingsProvider/res/values/defaults.xml
+@@ -200,7 +200,7 @@
+     <integer name="def_lock_screen_show_notifications">1</integer>
+ 
+     <!-- Default for Settings.Secure.LOCK_SCREEN_ALLOW_PRIVATE_NOTIFICATIONS -->
+-    <bool name="def_lock_screen_allow_private_notifications">true</bool>
++    <bool name="def_lock_screen_allow_private_notifications">false</bool>
+ 
+     <!-- Default for Settings.Global.HEADS_UP_NOTIFICATIONS_ENABLED, 1==on -->
+     <integer name="def_heads_up_enabled">1</integer>
+diff --git a/res/values/strings.xml b/res/values/strings.xml
+index b8121fb..5082fd9 100644
+--- a/packages/apps/Settings/res/values/strings.xml
++++ b/packages/apps/Settings/res/values/strings.xml
+@@ -2389,6 +2389,8 @@
+     <string name="qgp_version">QGP Version</string>
+     <!-- About phone screen,  setting option name  [CHAR LIMIT=40] -->
+     <string name="selinux_status">SELinux status</string>
++    <!-- About phone screen,  setting option name  [CHAR LIMIT=40] -->
++    <string name="pax_status">Unofficial PaX/Grsec</string>
+ 
+     <!-- About phone screen, show when a value of some status item is unavailable. -->
+     <string name="device_info_not_available">Not available</string>
+@@ -5451,6 +5453,9 @@
+     <string name="selinux_status_permissive">Permissive</string>
+     <string name="selinux_status_enforcing">Enforcing</string>
+ 
++    <string name="pax_status_active">Active</string>
++    <string name="pax_status_inactive">Active</string>
++
+     <!-- Notification of installed CA Certs --> <skip/>
+ 
+     <!-- Shows up when there is a user SSL CA Cert installed on the
+diff --git a/res/xml/device_info_settings.xml b/res/xml/device_info_settings.xml
+index d59486c..96f9c14 100644
+--- a/packages/apps/Settings/res/xml/device_info_settings.xml
++++ b/packages/apps/Settings/res/xml/device_info_settings.xml
+@@ -212,4 +212,10 @@
+                 settings:allowDividerAbove="true"
+                 settings:allowDividerBelow="true"/>
+ 
++        <!-- PaX status information -->
++        <Preference android:key="pax_status"
++                style="?android:preferenceInformationStyle"
++                android:title="@string/pax_status"
++                android:summary="@string/pax_status_inactive"/>
++
+ </PreferenceScreen>
+diff --git a/src/com/android/settings/DeviceInfoSettings.java b/src/com/android/settings/DeviceInfoSettings.java
+index d8394dd..c778448 100644
+--- a/packages/apps/Settings/src/com/android/settings/DeviceInfoSettings.java
++++ b/packages/apps/Settings/src/com/android/settings/DeviceInfoSettings.java
+@@ -66,6 +66,7 @@ public class DeviceInfoSettings extends SettingsPreferenceFragment implements In
+     private static final String KEY_DEVICE_MODEL = "device_model";
+     private static final String KEY_DEVICE_NAME = "device_name";
+     private static final String KEY_SELINUX_STATUS = "selinux_status";
++    private static final String KEY_PAX_STATUS = "pax_status";
+     private static final String KEY_BASEBAND_VERSION = "baseband_version";
+     private static final String KEY_FIRMWARE_VERSION = "firmware_version";
+     private static final String KEY_SECURITY_PATCH = "security_patch";
+diff --git a/include/private/android_filesystem_config.h b/include/private/android_filesystem_config.h
+index f03346e..f6ed99c 100644
+--- a/system/core/include/private/android_filesystem_config.h
++++ b/system/core/include/private/android_filesystem_config.h
+@@ -132,6 +132,10 @@
+ #define AID_SENSORS       3011 /* access to /dev/socket/sensor_ctl_socket & QCCI/QCSI */
+ 
+ 
++#define AID_PAX_NO_PAGEEXEC 3014 /* disable PaX's PAGEEXEC feature */
++#define AID_PAX_NO_MPROTECT 3015 /* disable PaX's MPROTECT feature */
++#define AID_PAX_NO_RANDMMAP 3016 /* disable PaX's RANDMMAP feature */
++
+ #define AID_EVERYBODY     9997  /* shared between all apps in the same profile */
+ #define AID_MISC          9998  /* access to misc storage */
+ #define AID_NOBODY        9999
+@@ -242,6 +246,10 @@ static const struct android_id_info android_ids[] = {
+     { "rfs_old",           AID_RFS_OLD, },
+     { "rfs_shared_old",    AID_RFS_SHARED_OLD, },
+ 
++    { "pax_no_pageexec",    AID_PAX_NO_PAGEEXEC, },
++    { "pax_no_mprotect",    AID_PAX_NO_MPROTECT, },
++    { "pax_no_randmmap",    AID_PAX_NO_RANDMMAP, },
++
+     { "everybody",     AID_EVERYBODY, },
+     { "misc",          AID_MISC, },
+     { "nobody",        AID_NOBODY, },
+diff --git a/rootdir/init.rc b/rootdir/init.rc
+index 498203c..70c58b9 100644
+--- a/system/core/rootdir/init.rc
++++ b/system/core/rootdir/init.rc
+@@ -112,6 +112,19 @@ on init
+     # app mem cgroups, used by activity manager, lmkd and zygote
+     mkdir /dev/memcg/apps/ 0755 system system
+ 
++	# KSPP sysctls
++	write /proc/sys/kernel/kptr_restrict 2
++    write /proc/sys/kernel/dmesg_restrict 1
++    #write /proc/sys/kernel/perf_event_paranoid 2
++    write /proc/sys/kernel/kexec_load_disabled 1
++    write /proc/sys/kernel/yama/ptrace_scope 1
++    write /proc/sys/user/max_user_namespaces 0
++    write /proc/sys/kernel/unprivileged_bpf_disabled 1
++    write /proc/sys/net/core/bpf_jit_harden 2
++
++	# Boost
++    write /proc/sys/kernel/sched_autogroup_enabled 1
++
+     write /proc/sys/kernel/panic_on_oops 1
+     write /proc/sys/kernel/hung_task_timeout_secs 0
+     write /proc/cpu/alignment 4
+@@ -126,7 +139,7 @@ on init
+     write /proc/sys/kernel/sched_child_runs_first 0
+ 
+     write /proc/sys/kernel/randomize_va_space 2
+-    write /proc/sys/kernel/kptr_restrict 2
++    #write /proc/sys/kernel/kptr_restrict 2
+     write /proc/sys/vm/mmap_min_addr 32768
+     write /proc/sys/net/ipv4/ping_group_range "0 2147483647"
+     write /proc/sys/net/unix/max_dgram_qlen 600
+@@ -352,8 +365,8 @@ on post-fs-data
+     restorecon /data
+ 
+     # start debuggerd to make debugging early-boot crashes easier.
+-    start debuggerd
+-    start debuggerd64
++    #start debuggerd
++    #start debuggerd64
+ 
+     # Make sure we have the device encryption key.
+     start vold
+@@ -507,6 +520,7 @@ on boot
+     # level system server to be able to adjust the kernel OOM driver
+     # parameters to match how it is managing things.
+     write /proc/sys/vm/overcommit_memory 1
++    #write /proc/sys/vm/compact_memory 1
+     write /proc/sys/vm/min_free_order_shift 4
+     chown root system /sys/module/lowmemorykiller/parameters/adj
+     chmod 0664 /sys/module/lowmemorykiller/parameters/adj
