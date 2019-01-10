@@ -8,8 +8,7 @@ Packages installation:
 
     dpkg --add-architecture i386 ; apt-get update
     apt-get build-dep gcc binutils llvm-defaults
-    apt-get install gcc-arm-none-eabi cmake python-dev swig ant bc proguard maven-debian-helper libemma-java libasm4-java libguava-java libnb-platform18-java libnb-org-openide-util-java libandroidsdk-ddmlib-java libmaven-source-plugin-java libfreemarker-java libmaven-javadoc-plugin-java ca-cacert curl gawk libgmp3-dev libmpfr-dev libmpc-dev git-core gperf libncurses-dev squashfs-tools pngcrush zip zlib1g-dev lzma libc6-dev-i386 g++-multilib lib32z1-dev lib32readline-dev lib32ncurses5-dev zlib1g-dev:i386 xsltproc python-mako schedtool gradle dirmngr libandroidsdk-sdklib-java eclipse-jdt libgradle-android-plugin-java android-sdk-build-tools android-sdk-platform-23 aapt lzop rsync python-dev
-    apt-get install imagemagick
+    apt-get install gcc-arm-none-eabi cmake python-dev swig ant bc proguard maven-debian-helper libemma-java libasm4-java libguava-java libnb-platform18-java libnb-org-openide-util-java libandroidsdk-ddmlib-java libmaven-source-plugin-java libfreemarker-java libmaven-javadoc-plugin-java ca-cacert curl gawk libgmp3-dev libmpfr-dev libmpc-dev git-core gperf libncurses-dev squashfs-tools pngcrush zip zlib1g-dev lzma libc6-dev-i386 g++-multilib lib32z1-dev lib32readline-dev lib32ncurses5-dev zlib1g-dev:i386 xsltproc python-mako schedtool gradle dirmngr libandroidsdk-sdklib-java eclipse-jdt libgradle-android-plugin-java android-sdk-build-tools android-sdk-platform-23 aapt lzop rsync python-dev imagemagick
 
 And the package installation from the contrib repository:
 
@@ -52,3 +51,14 @@ As soon as changes have been made by you or in LineageOS :
     . build/envsetup.sh
     repo sync -j20 --force-sync
     brunch kis3
+
+How to add modifications :
+--------------------------
+
+Add the changes that are not my git :
+
+    patch -Np1 --no-backup-if-mismatch < device/zte/kis3/Add_my_modifications_without_fork.patch
+
+Edit your files and save your changes :
+
+    repo diff > your_modification.patch
