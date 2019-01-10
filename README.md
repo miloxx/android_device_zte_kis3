@@ -57,6 +57,7 @@ How to add modifications :
 
 Add the changes that are not my git :
 
+    cd ~/LineageOS
     patch -Np1 --no-backup-if-mismatch < device/zte/kis3/Add_my_modifications_without_fork.patch
 
 Edit your files and save your changes :
