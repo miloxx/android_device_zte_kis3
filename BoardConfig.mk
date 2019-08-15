@@ -108,11 +108,13 @@ TARGET_POWERHAL_VARIANT := qcom
 # QCOM hardware
 BOARD_USES_QCOM_HARDWARE := true
 
-# Recovery
-TARGET_RECOVERY_DENSITY := hdpi
-TARGET_RECOVERY_FSTAB := device/zte/kis3/ramdisk/fstab.qcom
-TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
-TARGET_USERIMAGES_USE_EXT4 := true
+# TWRP
+RECOVERY_VARIANT := twrp
+DEVICE_RESOLUTION := 480x800
+RECOVERY_GRAPHICS_USE_LINELENGTH := true
+TW_BRIGHTNESS_PATH := "/sys/class/leds/lcd-backlight/brightness"
+HAVE_SELINUX := true
+BOARD_UMS_LUNFILE := "/sys/devices/platform/msm_hsusb/gadget/lun0/file"
 
 # RIL
 TARGET_RIL_VARIANT := caf
