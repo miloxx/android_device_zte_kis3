@@ -26,10 +26,6 @@ TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
 TARGET_CPU_VARIANT := cortex-a7
 TARGET_ARCH_VARIANT := armv7-a-neon
-
-TARGET_GLOBAL_CFLAGS += -mtune=cortex-a7 -mfpu=neon-vfpv4 -mfloat-abi=softfp
-TARGET_GLOBAL_CPPFLAGS += -mtune=cortex-a7 -mfpu=neon-vfpv4 -mfloat-abi=softfp
-
 TARGET_SPECIFIC_HEADER_PATH += device/zte/kis3/include
 
 # Inline kernel building
@@ -118,10 +114,6 @@ TW_BRIGHTNESS_PATH := "/sys/class/leds/lcd-backlight/brightness"
 HAVE_SELINUX := true
 BOARD_UMS_LUNFILE := "/sys/devices/platform/msm_hsusb/gadget/lun0/file"
 
-# RIL
-TARGET_RIL_VARIANT := caf
-BOARD_GLOBAL_CFLAGS += -DUSE_RIL_VERSION_10
-BOARD_GLOBAL_CPPFLAGS += -DUSE_RIL_VERSION_10
 
 # SELinux
 BOARD_SEPOLICY_DIRS += device/zte/kis3/sepolicy
