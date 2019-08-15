@@ -30,7 +30,8 @@ Inform git if this has never been done (To be done only once):
 Initialize repo:
 
     repo init -u git://github.com/LineageOS/android.git -b cm-14.1
-    curl --create-dirs -L -o .repo/local_manifests/manifest_zte_kis3.xml -O -L https://raw.githubusercontent.com/HacKurx/android_local_manifest/cm-14.1/manifest_zte_kis3.xml
+    curl --create-dirs -L -o .repo/local_manifests/manifest_zte_kis3.xml -O -L
+    https://raw.githubusercontent.com/miloxx/android_local_manifest/twrp/manifest_zte_kis3.xml
     repo sync -j20
 
 Compile:
