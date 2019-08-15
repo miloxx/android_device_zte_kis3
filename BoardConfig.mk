@@ -112,7 +112,8 @@ BOARD_USES_QCOM_HARDWARE := true
 TARGET_RECOVERY_FSTAB := $(PLATFORM_PATH)/ramdisk/fstab.qcom
 
 # TWRP
-TW_THEME := portrait_mdpi
+TARGET_SCREEN_WIDTH := 800
+TARGET_SCREEN_HEIGHT := 480
 RECOVERY_GRAPHICS_USE_LINELENGTH := true
 TW_BRIGHTNESS_PATH := "/sys/class/leds/lcd-backlight/brightness"
 HAVE_SELINUX := true
