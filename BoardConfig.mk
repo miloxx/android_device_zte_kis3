@@ -108,9 +108,11 @@ TARGET_POWERHAL_VARIANT := qcom
 # QCOM hardware
 BOARD_USES_QCOM_HARDWARE := true
 
+# Recovery
+TARGET_RECOVERY_FSTAB := $(PLATFORM_PATH)/ramdisk/fstab.qcom
+
 # TWRP
-RECOVERY_VARIANT := twrp
-DEVICE_RESOLUTION := 480x800
+TW_THEME := portrait_hdpi
 RECOVERY_GRAPHICS_USE_LINELENGTH := true
 TW_BRIGHTNESS_PATH := "/sys/class/leds/lcd-backlight/brightness"
 HAVE_SELINUX := true
