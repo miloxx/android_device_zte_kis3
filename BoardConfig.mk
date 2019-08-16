@@ -14,8 +14,8 @@ TARGET_ARCH_VARIANT := armv7-a-neon
 TARGET_SPECIFIC_HEADER_PATH += device/zte/kis3/include
 
 # Flags
-TARGET_GLOBAL_CFLAGS += -mtune=cortex-a7 -mfpu=neon-vfpv4 -mfloat-abi=softfp
-TARGET_GLOBAL_CPPFLAGS += -mtune=cortex-a7 -mfpu=neon-vfpv4 -mfloat-abi=softfp
+#TARGET_GLOBAL_CFLAGS += -mtune=cortex-a7 -mfpu=neon-vfpv4 -mfloat-abi=softfp
+#TARGET_GLOBAL_CPPFLAGS += -mtune=cortex-a7 -mfpu=neon-vfpv4 -mfloat-abi=softfp
 
 # Kernel
 TARGET_PREBUILT_KERNEL := device/zte/kis3/Image.gz-dtb
