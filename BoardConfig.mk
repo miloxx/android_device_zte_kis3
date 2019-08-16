@@ -36,11 +36,11 @@ BOARD_FLASH_BLOCK_SIZE := 131072
 
 # TWRP Specific
 RECOVERY_GRAPHICS_USE_LINELENGTH := true
-TWHAVE_SELINUX := true
+#TWHAVE_SELINUX := true
 TW_THEME := portrait_mdpi
 RECOVERY_GRAPHICS_USE_LINELENGTH := true
 TARGET_RECOVERY_FSTAB := device/zte/kis3/recovery/etc/twrp.fstab
 TW_BRIGHTNESS_PATH := "/sys/class/leds/lcd-backlight/brightness"
-HAVE_SELINUX := true
+#HAVE_SELINUX := true
 BOARD_UMS_LUNFILE := "/sys/devices/platform/msm_hsusb/gadget/lun0/file"
 BOARD_CUSTOM_BOOTIMG_MK := device/zte/kis3/mkbootimg.mk
