@@ -1,6 +1,9 @@
 # Inherit device configuration
 $(call inherit-product, device/zte/kis3/kis3.mk)
 
+# Inherit telephony stuff
+$(call inherit-product, vendor/omni/config/gsm.mk)
+
 # Device identifier. This must come after all inclusions
 PRODUCT_DEVICE := kis3
 PRODUCT_NAME := lineage_kis3
