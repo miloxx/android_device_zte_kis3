@@ -1,1 +1,2 @@
-add_lunch_combo lineage_kis3-userdebug
+add_lunch_combo omni_kis3-eng
+add_lunch_combo omni_kis3-userdebug
