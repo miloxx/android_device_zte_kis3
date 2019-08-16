@@ -1,5 +1,0 @@
-allow netmgrd self:capability dac_override;
-
-# Starts as (root,radio) changes to (radio,radio)
-allow netmgrd self:capability { setuid setgid net_admin net_raw };
-dontaudit netmgrd self:capability fsetid;
