@@ -1,5 +1,5 @@
 # Inherit device configuration
-$(call inherit-product, device/zte/kis3/kis3.mk)
+$(call inherit-product, device/zte/kis3/device.mk)
 
 # Inherit telephony stuff
 $(call inherit-product, vendor/omni/config/gsm.mk)
